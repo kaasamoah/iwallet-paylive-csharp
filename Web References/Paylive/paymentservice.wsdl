@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.i-walletlive.com/payLIVE" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PaymentService" targetNamespace="http://www.i-walletlive.com/payLIVE" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://www.i-walletlive.com/payLIVE" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="CancelTransaction" type="tns:CancelTransaction" />
+      <xs:element name="CancelTransactionResponse" type="tns:CancelTransactionResponse" />
+      <xs:element name="ConfirmTransaction" type="tns:ConfirmTransaction" />
+      <xs:element name="ConfirmTransactionResponse" type="tns:ConfirmTransactionResponse" />
+      <xs:element name="PaymentHeader" type="tns:PaymentHeader" />
+      <xs:element name="ProcessOrder" type="tns:ProcessOrder" />
+      <xs:element name="ProcessOrderResponse" type="tns:ProcessOrderResponse" />
+      <xs:element name="ProcessPaymentJSON" type="tns:ProcessPaymentJSON" />
+      <xs:element name="ProcessPaymentJSONResponse" type="tns:ProcessPaymentJSONResponse" />
+      <xs:element name="ProcessPaymentOrder" type="tns:ProcessPaymentOrder" />
+      <xs:element name="ProcessPaymentOrderResponse" type="tns:ProcessPaymentOrderResponse" />
+      <xs:element name="checkPaymentStatus" type="tns:checkPaymentStatus" />
+      <xs:element name="checkPaymentStatusResponse" type="tns:checkPaymentStatusResponse" />
+      <xs:element name="generatePaymentCode" type="tns:generatePaymentCode" />
+      <xs:element name="generatePaymentCodeResponse" type="tns:generatePaymentCodeResponse" />
+      <xs:element name="mobilePaymentOrder" type="tns:mobilePaymentOrder" />
+      <xs:element name="mobilePaymentOrderResponse" type="tns:mobilePaymentOrderResponse" />
+      <xs:element name="verifyMobilePayment" type="tns:verifyMobilePayment" />
+      <xs:element name="verifyMobilePaymentResponse" type="tns:verifyMobilePaymentResponse" />
+      <xs:complexType name="mobilePaymentOrder">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="orderId" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="subtotal" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="shippingCost" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="taxAmount" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="total" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="comment1" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="comment2" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="orderItems" type="tns:ArrayOfOrderItem" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfOrderItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" form="qualified" name="OrderItem" nillable="true" type="tns:OrderItem" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="OrderItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="ItemCode" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="ItemName" type="xs:string" />
+          <xs:element form="qualified" name="UnitPrice" type="xs:decimal" />
+          <xs:element form="qualified" name="Quantity" type="xs:int" />
+          <xs:element form="qualified" name="SubTotal" type="xs:decimal" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PaymentHeader">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="APIVersion" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="MerchantKey" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="MerchantEmail" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="SvcType" type="xs:string" />
+          <xs:element form="qualified" name="UseIntMode" type="xs:boolean" />
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip" />
+      </xs:complexType>
+      <xs:complexType name="mobilePaymentOrderResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="mobilePaymentOrderResult" type="tns:MobilePaymentOrderResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MobilePaymentOrderResponse">
+        <xs:sequence>
+          <xs:element form="qualified" name="success" type="xs:boolean" />
+          <xs:element minOccurs="0" form="qualified" name="token" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="error" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="imageUrl" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="orderCode" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="status" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="transactionId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="generatePaymentCode">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="orderId" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="subtotal" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="shippingCost" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="taxAmount" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="total" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="comment1" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="comment2" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="orderItems" type="tns:ArrayOfOrderItem" />
+          <xs:element minOccurs="0" form="qualified" name="payerName" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="payerMobile" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="providerName" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="providerType" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="generatePaymentCodeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="generatePaymentCodeResult" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConfirmTransaction">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="payToken" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="transactionId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConfirmTransactionResponse">
+        <xs:sequence>
+          <xs:element form="qualified" name="ConfirmTransactionResult" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ProcessPaymentOrder">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="orderId" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="subtotal" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="shippingCost" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="taxAmount" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="total" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="comment1" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="comment2" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="orderItems" type="tns:ArrayOfOrderItem" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ProcessPaymentOrderResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="ProcessPaymentOrderResult" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ProcessPaymentJSON">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="orderId" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="amount" type="xs:decimal" />
+          <xs:element minOccurs="0" form="qualified" name="comment1" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="comment2" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="orderItems" type="tns:ArrayOfOrderItem" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ProcessPaymentJSONResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="processPaymentJSONResult" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ProcessOrder">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="amount" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="custRef" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="comment1" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="comment2" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="unitPrice" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="quantity" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="item" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="useToken" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="useIntMode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ProcessOrderResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="ProcessOrderResult" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verifyMobilePayment">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="orderId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verifyMobilePaymentResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="verifyMobilePaymentResult" type="tns:VerifyMobilePaymentResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="VerifyMobilePaymentResponse">
+        <xs:sequence>
+          <xs:element form="qualified" name="success" type="xs:boolean" />
+          <xs:element minOccurs="0" form="qualified" name="token" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="error" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="imageUrl" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="orderCode" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="status" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="transactionId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="checkPaymentStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="orderId" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="providerName" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="providerType" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="checkPaymentStatusResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="checkPaymentStatusResult" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CancelTransaction">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="payToken" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="transactionId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CancelTransactionResponse">
+        <xs:sequence>
+          <xs:element form="qualified" name="CancelTransactionResult" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="checkPaymentStatus">
+    <wsdl:part name="parameters" element="tns:checkPaymentStatus" />
+    <wsdl:part name="PaymentHeader" element="tns:PaymentHeader" />
+  </wsdl:message>
+  <wsdl:message name="generatePaymentCodeResponse">
+    <wsdl:part name="parameters" element="tns:generatePaymentCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="mobilePaymentOrder">
+    <wsdl:part name="parameters" element="tns:mobilePaymentOrder" />
+    <wsdl:part name="PaymentHeader" element="tns:PaymentHeader" />
+  </wsdl:message>
+  <wsdl:message name="ProcessPaymentJSONResponse">
+    <wsdl:part name="parameters" element="tns:ProcessPaymentJSONResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProcessOrderResponse">
+    <wsdl:part name="parameters" element="tns:ProcessOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="verifyMobilePaymentResponse">
+    <wsdl:part name="parameters" element="tns:verifyMobilePaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="verifyMobilePayment">
+    <wsdl:part name="parameters" element="tns:verifyMobilePayment" />
+    <wsdl:part name="PaymentHeader" element="tns:PaymentHeader" />
+  </wsdl:message>
+  <wsdl:message name="mobilePaymentOrderResponse">
+    <wsdl:part name="parameters" element="tns:mobilePaymentOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="generatePaymentCode">
+    <wsdl:part name="parameters" element="tns:generatePaymentCode" />
+    <wsdl:part name="PaymentHeader" element="tns:PaymentHeader" />
+  </wsdl:message>
+  <wsdl:message name="CancelTransactionResponse">
+    <wsdl:part name="parameters" element="tns:CancelTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelTransaction">
+    <wsdl:part name="parameters" element="tns:CancelTransaction" />
+    <wsdl:part name="PaymentHeader" element="tns:PaymentHeader" />
+  </wsdl:message>
+  <wsdl:message name="ConfirmTransaction">
+    <wsdl:part name="parameters" element="tns:ConfirmTransaction" />
+    <wsdl:part name="PaymentHeader" element="tns:PaymentHeader" />
+  </wsdl:message>
+  <wsdl:message name="ProcessPaymentOrder">
+    <wsdl:part name="parameters" element="tns:ProcessPaymentOrder" />
+    <wsdl:part name="PaymentHeader" element="tns:PaymentHeader" />
+  </wsdl:message>
+  <wsdl:message name="ProcessOrder">
+    <wsdl:part name="parameters" element="tns:ProcessOrder" />
+    <wsdl:part name="PaymentHeader" element="tns:PaymentHeader" />
+  </wsdl:message>
+  <wsdl:message name="checkPaymentStatusResponse">
+    <wsdl:part name="parameters" element="tns:checkPaymentStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConfirmTransactionResponse">
+    <wsdl:part name="parameters" element="tns:ConfirmTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProcessPaymentJSON">
+    <wsdl:part name="parameters" element="tns:ProcessPaymentJSON" />
+  </wsdl:message>
+  <wsdl:message name="ProcessPaymentOrderResponse">
+    <wsdl:part name="parameters" element="tns:ProcessPaymentOrderResponse" />
+  </wsdl:message>
+  <wsdl:portType name="PaymentService">
+    <wsdl:operation name="mobilePaymentOrder">
+      <wsdl:input name="mobilePaymentOrder" message="tns:mobilePaymentOrder" />
+      <wsdl:output name="mobilePaymentOrderResponse" message="tns:mobilePaymentOrderResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="generatePaymentCode">
+      <wsdl:input name="generatePaymentCode" message="tns:generatePaymentCode" />
+      <wsdl:output name="generatePaymentCodeResponse" message="tns:generatePaymentCodeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmTransaction">
+      <wsdl:input name="ConfirmTransaction" message="tns:ConfirmTransaction" />
+      <wsdl:output name="ConfirmTransactionResponse" message="tns:ConfirmTransactionResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessPaymentOrder">
+      <wsdl:input name="ProcessPaymentOrder" message="tns:ProcessPaymentOrder" />
+      <wsdl:output name="ProcessPaymentOrderResponse" message="tns:ProcessPaymentOrderResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessPaymentJSON">
+      <wsdl:input name="ProcessPaymentJSON" message="tns:ProcessPaymentJSON" />
+      <wsdl:output name="ProcessPaymentJSONResponse" message="tns:ProcessPaymentJSONResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessOrder">
+      <wsdl:input name="ProcessOrder" message="tns:ProcessOrder" />
+      <wsdl:output name="ProcessOrderResponse" message="tns:ProcessOrderResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="verifyMobilePayment">
+      <wsdl:input name="verifyMobilePayment" message="tns:verifyMobilePayment" />
+      <wsdl:output name="verifyMobilePaymentResponse" message="tns:verifyMobilePaymentResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="checkPaymentStatus">
+      <wsdl:input name="checkPaymentStatus" message="tns:checkPaymentStatus" />
+      <wsdl:output name="checkPaymentStatusResponse" message="tns:checkPaymentStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelTransaction">
+      <wsdl:input name="CancelTransaction" message="tns:CancelTransaction" />
+      <wsdl:output name="CancelTransactionResponse" message="tns:CancelTransactionResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PaymentServiceSoapBinding" type="tns:PaymentService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="generatePaymentCode">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="generatePaymentCode">
+        <soap:header message="tns:generatePaymentCode" part="PaymentHeader" use="literal" />
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:input>
+      <wsdl:output name="generatePaymentCodeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="mobilePaymentOrder">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="mobilePaymentOrder">
+        <soap:header message="tns:mobilePaymentOrder" part="PaymentHeader" use="literal" />
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:input>
+      <wsdl:output name="mobilePaymentOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmTransaction">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ConfirmTransaction">
+        <soap:header message="tns:ConfirmTransaction" part="PaymentHeader" use="literal" />
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:input>
+      <wsdl:output name="ConfirmTransactionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessPaymentOrder">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ProcessPaymentOrder">
+        <soap:header message="tns:ProcessPaymentOrder" part="PaymentHeader" use="literal" />
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:input>
+      <wsdl:output name="ProcessPaymentOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessPaymentJSON">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ProcessPaymentJSON">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ProcessPaymentJSONResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessOrder">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="ProcessOrder">
+        <soap:header message="tns:ProcessOrder" part="PaymentHeader" use="literal" />
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:input>
+      <wsdl:output name="ProcessOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="verifyMobilePayment">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="verifyMobilePayment">
+        <soap:header message="tns:verifyMobilePayment" part="PaymentHeader" use="literal" />
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:input>
+      <wsdl:output name="verifyMobilePaymentResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkPaymentStatus">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="checkPaymentStatus">
+        <soap:header message="tns:checkPaymentStatus" part="PaymentHeader" use="literal" />
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:input>
+      <wsdl:output name="checkPaymentStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelTransaction">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="CancelTransaction">
+        <soap:header message="tns:CancelTransaction" part="PaymentHeader" use="literal" />
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:input>
+      <wsdl:output name="CancelTransactionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PaymentService">
+    <wsdl:port name="PaymentServiceSoap" binding="tns:PaymentServiceSoapBinding">
+      <soap:address location="https://www.i-walletlive.com/webservices/paymentservice.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
